@@ -1,0 +1,38 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsmath}
+\usepackage[english]{babel}
+\usepackage[latin1]{inputenc}
+\setlength\topmargin{0in}
+\setlength\headheight{0in}
+\setlength\headsep{0in}
+\setlength\textheight{10in}
+\setlength\textwidth{6.5in}
+\setlength\oddsidemargin{0in}
+\setlength\evensidemargin{0in}
+
+\title{Advanced Information Systems\\ project status report}
+\author{Gasparella Luca}
+\date{A.y. 2008/2009}
+
+\begin{document}
+\maketitle
+\subsection*{Problem definition}
+A soaring number of services bases their functionality on a distribuited context where each local implementation is often realized separately from the others and the model used to represent data may be significatively different. In particular the problem analyzed take into the syntactic heterogeneity that fold several aspects about the definitions for representing data. The main aim of the project is to allow the execution of queries on datasources which have been described differently through two distinct schemas.
+
+\subsection*{Status}
+The syntactic heterogeneity is a part of the problem known as ``Schema matching'' which objective is finding a semantic relation between two objects. In order to solve the problem, a solution based on ``stacking'' from machine learning was adopted in \ref{learningMDS} achieving a very good results since the accuracy of their proposal is around 71-92\%. They average a learning weight based on the couple 
+
+The problem that comes directly is the effective syntactic difference between some field that may be the definition of the concept city: ``city'',``coordinates\footnote{The geographic coordinate system.}'', ``postal code\footnote{}''
+
+\begin{thebibliography}{9}
+\bibitem{iDS} Xin Dong, Alon Halevy, \emph{``Indexing Dataspaces''}, SIGMOD '07: Proceedings of the 2007 ACM SIGMOD international conference on Management of data (2007), pp. 43-54.
+
+\bibitem{drd} AK Elmagarmid, PG Ipeirotis, VS Verykios, \emph{``Duplicate Record Detection: A Survey''}, Knowledge and Data Engineering, IEEE Transactions on, Vol. 19, No. 1. (2007), pp. 1-16.
+
+\bibitem{learningMDS} AnHai Doan, Pedro Domingos, Alon Halevy, \emph{``Learning to Match the Schemas of Data Sources: A Multistrategy Approach''}, Kluwer Academic Publishers, Volume 50 ,  Issue 3 (2003), pp. 279 - 301.
+
+\end{thebibliography}
+
+\end{document}
+

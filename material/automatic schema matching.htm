@@ -1,0 +1,2085 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- base href="http://www.deg.byu.edu/presentations/colloquium2003.ppt" --><meta http-equiv="content-type" content="text/html; charset=UTF-8"><title>Automating
+Schema Matching
+</title></head><body><div style="border: 1px solid rgb(153, 153, 153); margin: -1px -1px 0pt; padding: 0pt; background: rgb(255, 255, 255) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;"><div style="border: 1px solid rgb(153, 153, 153); margin: 12px; padding: 8px; background: rgb(221, 221, 221) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; font-family: arial,sans-serif; font-style: normal; font-variant: normal; font-size: 13px; line-height: normal; font-size-adjust: none; font-stretch: normal; -x-system-font: none; color: rgb(0, 0, 0); font-weight: normal; text-align: left;">Questa è la versione .html del file contenuto in <a href="http://www.deg.byu.edu/presentations/colloquium2003.ppt" style="text-decoration: underline; color: rgb(0, 0, 204);">http://www.deg.byu.edu/presentations/colloquium2003.ppt</a>.<br> <b><font color="#0039b6">G</font> <font color="#c41200">o</font> <font color="#f3c518">o</font> <font color="#0039b6">g</font> <font color="#30a72f">l</font> <font color="#c41200">e</font></b> crea automaticamente la versione .html dei documenti durante la scansione del Web.</div></div><div style="position: relative;">
+
+
+
+
+
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Automating&nbsp;<br>
+<b style="color: black; background-color: rgb(255, 255, 102);">Schema</b> <b style="color: black; background-color: rgb(160, 255, 255);">Matching</b></font>&nbsp;<br></p>
+<p align="center"><font size="6" face="Times New Roman"><i>David W. 
+Embley, Cui Tao, Li Xu</i></font></p>
+<p align="center"><font size="6" face="Times New Roman"><i>Brigham Young 
+University</i></font>&nbsp;<br></p>
+<p><font size="2" face="Arial">Funded by NSF</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Information 
+Exchange</font>&nbsp;<br></p>
+<p align="center"><font size="6" face="Arial">Source</font>&nbsp;<br>
+</p>
+<p><font size="6" face="Arial">Target</font>&nbsp;<br></p>
+<p><font size="6" face="Arial">Information</font></p>
+<p><font size="6" face="Arial">Extraction</font>&nbsp;<br></p>
+<p><font size="6" face="Arial"><b style="color: black; background-color: rgb(255, 255, 102);">Schema</b></font></p>
+<p><font size="6" face="Arial"><b style="color: black; background-color: rgb(160, 255, 255);">Matching</b></font>&nbsp;<br></p>
+<p><font size="5" face="Arial">Leverage</font></p>
+<p><font size="5" face="Arial">this </font><font size="5" face="Times New Roman">…</font>&nbsp;<br>
+</p>
+<p><font size="5" face="Times New Roman">…</font><font size="5" face="Arial"> 
+to do</font></p>
+<p><font size="5" face="Arial">this</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Presentation 
+Outline</font>&nbsp;<br></p>
+<ul type="disc">
+  <li><font size="7" face="Times New Roman">Information Extraction</font></li>
+  <li><font size="7" face="Times New Roman"><b style="color: black; background-color: rgb(255, 255, 102);">Schema</b> <b style="color: black; background-color: rgb(160, 255, 255);">Matching</b> 
+  for Tables</font></li>
+  <li><font size="7" face="Times New Roman">Direct <b style="color: black; background-color: rgb(255, 255, 102);">Schema</b> <b style="color: black; background-color: rgb(160, 255, 255);">Matching</b></font></li>
+  <li><font size="7" face="Times New Roman">Indirect <b style="color: black; background-color: rgb(255, 255, 102);">Schema</b> 
+  <b style="color: black; background-color: rgb(160, 255, 255);">Matching</b></font></li>
+  <li><font size="7" face="Times New Roman">Conclusions and 
+  Future Work</font></li>
+</ul>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Information 
+Extraction</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Extracting Pertinent 
+Information from Documents</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">A Conceptual-Modeling 
+Solution</font>&nbsp;<br></p>
+<p align="center"><font size="4" face="Arial">Year</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Arial">Price</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Arial">Make</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Arial">Mileage</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Arial">Model</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Arial">Feature</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Arial">PhoneNr</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Arial">Extension</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Arial">Car&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">has</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">has</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">has</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">has</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">is for</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">has</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">has</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">has</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">1..*</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">0..1</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">1..*</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">1..*</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">1..*</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">1..*</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">1..*</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">1..*</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">0..1</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">0..1</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">0..1</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">0..1</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">0..1</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">0..1</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">0..*</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Arial">1..*</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Car-Ads Ontology</font>&nbsp;<br>
+</p>
+<p><font size="6" face="Arial">Car [-&gt;object];</font></p>
+<p><font size="6" face="Arial">Car [0..1] has Year [1..*];</font></p>
+<p><font size="6" face="Arial">Car [0..1] has Make [1..*];</font></p>
+<p><font size="6" face="Arial">Car [0...1] has Model [1..*];</font></p>
+<p><font size="6" face="Arial">Car [0..1] has Mileage [1..*];</font></p>
+<p><font size="6" face="Arial">Car [0..*] has Feature [1..*];</font></p>
+<p><font size="6" face="Arial">Car [0..1] has Price [1..*];</font></p>
+<p><font size="6" face="Arial">PhoneNr [1..*]&nbsp; is for Car [0..*];</font></p>
+<p><font size="6" face="Arial">PhoneNr [0..1] has Extension [1..*];</font></p>
+<p><font size="6" face="Arial">Year matches [4]</font></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;<font size="6" face="Arial">constant {extract 
+“\d{2}”;</font></p>
+<p><font size="6" face="Arial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+context "([^\$\d]|^)[4-9]\d[^\d]";</font></p>
+<p><font size="6" face="Arial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+substitute "^" -&gt; "19"; },</font></p>
+<p><font size="6" face="Arial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+…</font></p>
+<p><font size="6" face="Arial">&nbsp;&nbsp;&nbsp;&nbsp; …</font></p>
+<p><font size="6" face="Arial">End;</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Recognition 
+and Extraction</font>&nbsp;<br></p>
+<p><font size="5" face="Arial">Car&nbsp;&nbsp;&nbsp;&nbsp; Year&nbsp; 
+Make&nbsp;&nbsp;&nbsp;&nbsp; Model&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Mileage&nbsp; Price&nbsp;&nbsp;&nbsp; PhoneNr</font></p>
+<p><font size="5" face="Arial">0001&nbsp; 1989&nbsp; Subaru&nbsp;&nbsp;
+SW&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+$1900&nbsp; (336)835-8597</font></p>
+<p><font size="5" face="Arial">0002&nbsp; 1998&nbsp;
+Elantra&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(336)526-5444</font></p>
+<p><font size="5" face="Arial">0003&nbsp; 1994&nbsp; HONDA&nbsp; ACCORD 
+EX&nbsp; 100K&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+(336)526-1081</font>&nbsp;<br></p>
+<p><font size="5" face="Arial">Car&nbsp;&nbsp;&nbsp; Feature</font></p>
+<p><font size="5" face="Arial">0001&nbsp; Auto</font></p>
+<p><font size="5" face="Arial">0001&nbsp; AC</font></p>
+<p><font size="5" face="Arial">0002&nbsp; Black</font></p>
+<p><font size="5" face="Arial">0002&nbsp; 4 door</font></p>
+<p><font size="5" face="Arial">0002&nbsp; tinted windows</font></p>
+<p><font size="5" face="Arial">0002&nbsp; Auto</font></p>
+<p><font size="5" face="Arial">0002&nbsp; pb</font></p>
+<p><font size="5" face="Arial">0002&nbsp; ps</font></p>
+<p><font size="5" face="Arial">0002&nbsp; cruise</font></p>
+<p><font size="5" face="Arial">0002&nbsp; am/fm</font></p>
+<p><font size="5" face="Arial">0002&nbsp; cassette stereo</font></p>
+<p><font size="5" face="Arial">0002&nbsp; a/c</font></p>
+<p><font size="5" face="Arial">0003&nbsp; Auto</font></p>
+<p><font size="5" face="Arial">0003&nbsp; jade green</font></p>
+<p><font size="5" face="Arial">0003&nbsp; gold</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman"><b style="color: black; background-color: rgb(255, 255, 102);">Schema</b> <b style="color: black; background-color: rgb(160, 255, 255);">Matching</b> 
+for HTML Tables with Unknown Structure</font>&nbsp;<br></p>
+<p align="center"><font size="7" face="Times New Roman"><i>Cui Tao</i></font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Table-<b style="color: black; background-color: rgb(255, 255, 102);">Schema</b> 
+<b style="color: black; background-color: rgb(160, 255, 255);">Matching</b>&nbsp;<br>
+(Basic Idea)</font>&nbsp;<br></p>
+<ul type="disc">
+  <li><font size="7" face="Times New Roman">Many Tables on the 
+  Web</font></li>
+  <li><font size="7" face="Times New Roman">Ontology-Based Extraction</font></li>
+  <ul type="disc">
+    <li><font size="6" face="Times New Roman">Works well for 
+    unstructured or semistructured data</font></li>
+    <li><font size="6" face="Times New Roman">What about structured 
+    data </font><font size="6" face="Tahoma">– tables? </font></li>
+    </ul>
+  <li><font size="7" face="Times New Roman">Method</font></li>
+  <ul type="disc">
+    <li><font size="6" face="Times New Roman">Form attribute-value 
+    pairs</font></li>
+    <li><font size="6" face="Times New Roman">Do extraction</font></li>
+    <li><font size="6" face="Times New Roman">Infer mappings from 
+    extraction patterns</font></li>
+</ul></ul>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Problem: Different 
+Schemas</font>&nbsp;<br></p>
+<p><font size="6" face="Times New Roman">Target Database <b style="color: black; background-color: rgb(255, 255, 102);">Schema</b></font></p>
+<ul><p>&nbsp;&nbsp;&nbsp;&nbsp;<font size="6" face="Times New Roman">{Car, 
+Year, Make, Model, Mileage, Price, PhoneNr},&nbsp; {PhoneNr, Extension}, 
+{Car, Feature}</font></p></ul>
+<p><font size="6" face="Times New Roman">Different Source Table Schemas</font></p>
+<ul><ul type="disc">
+    <li><font size="6" face="Times New Roman">{Run #, Yr, Make, 
+    Model, Tran, Color, Dr}</font></li>
+    <li><font size="6" face="Times New Roman">{Make, Model, Year, 
+    Colour, Price, Auto, Air Cond.,&nbsp;&nbsp; AM/FM, CD}</font></li>
+    <li><font size="6" face="Times New Roman">{Vehicle, Distance, 
+    Price, Mileage}</font></li>
+    <li><font size="6" face="Times New Roman">{Year, Make, Model, 
+    Trim, Invoice/Retail, Engine, Fuel Economy}</font></li>
+</ul></ul>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Problem: Attribute 
+is Value</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Problem: Attribute-Value 
+is Value</font>&nbsp;<br></p>
+<p align="center"><font size="6" color="#c40202" face="Times New Roman">?</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#c40202" face="Times New Roman">?</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Problem: Value 
+is <i>not</i> Value</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Problem: Implied 
+Values</font>&nbsp;<br></p>
+<p><font size="6" color="#ff0000" face="Arial">``</font>&nbsp;<br>
+</p>
+<p><font size="6" color="#ff0000" face="Arial">``</font>&nbsp;<br>
+</p>
+<p><font size="6" color="#ff0000" face="Arial">``</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Problem: Missing 
+Attributes</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Problem: Compound 
+Attributes</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Problem: Factored 
+Values</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Problem: Split 
+Values</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Problem: Merged 
+Values</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Problem: Values 
+not of Interest</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Problem: Information 
+Behind Links</font>&nbsp;<br></p>
+<p><font size="5" face="Arial">Single-Column</font></p>
+<p><font size="5" face="Arial">Table (formatted</font></p>
+<p><font size="5" face="Arial">as list)</font>&nbsp;<br></p>
+<p><font size="5" face="Arial">Table</font></p>
+<p><font size="5" face="Arial">extending</font></p>
+<p><font size="5" face="Arial">over several</font></p>
+<p><font size="5" face="Arial">pages</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Solution</font>&nbsp;<br>
+</p>
+<ul type="disc">
+  <li><font size="7" face="Times New Roman">Form attribute-value 
+  pairs (adjust if necessary)</font></li>
+  <li><font size="7" face="Times New Roman">Do extraction</font></li>
+  <li><font size="7" face="Times New Roman">Infer mappings from 
+  extraction patterns</font></li>
+</ul>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Solution: Remove 
+Internal Factoring</font>&nbsp;<br></p>
+<p><font size="5" face="Arial">Discover Nesting: Make, (Model, (Year, 
+Colour, Price, Auto, Air Cond, AM/FM, CD)*)*</font>&nbsp;<br>&nbsp;<br>
+</p>
+<p><font size="5" face="Arial">Unnest: μ<sub>(Model, Year, Colour, 
+Price, Auto, Air Cond, AM/FM, CD)*</sub></font><font size="2" face="Arial"> </font><font size="5" face="Arial">μ</font><font size="2" face="Arial"> </font><font size="5" face="Arial"><sub>(Year, Colour, Price, Auto, Air Cond, AM/FM, 
+CD)*</sub>Table</font>&nbsp;<br></p>
+<p><font size="3" color="#ff3300" face="Arial">Legend</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">ACURA</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">ACURA</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Solution: Replace 
+Boolean Values</font>&nbsp;<br></p>
+<p><font size="3" color="#ff3300" face="Arial">Legend</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">ACURA</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">ACURA</font>&nbsp;<br>
+</p>
+<p><font size="5" face="Times New Roman">β</font><font size="5" face="Arial"> <sup>
+CD</sup><sub><sup> </sup></sub>Table</font>&nbsp;<br></p>
+<p><font size="3" face="Arial">Yes,</font>&nbsp;<br></p>
+<p><font size="3" color="#ff3300" face="Arial">CD</font><font size="3" face="Arial"> </font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">CD </font>&nbsp;<br>
+</p>
+<p><font size="3" face="Arial">Yes,</font>&nbsp;<br></p>
+<p><font size="3" face="Arial">Yes,</font>&nbsp;<br></p>
+<p><font size="5" face="Arial">β<sup>Auto</sup>β<sup>Air Cond</sup>β<sup>AM/FM</sup></font>&nbsp;<br>
+</p>
+<p><font size="3" face="Arial">Yes,</font>&nbsp;<br></p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Solution: Form 
+Attribute-Value Pairs</font>&nbsp;<br></p>
+<p><font size="3" color="#ff3300" face="Arial">Legend</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">ACURA</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">ACURA</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">CD</font><font size="3" face="Arial"> </font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">CD </font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="4" face="Arial">&lt;Make, Honda&gt;, &lt;Model, Civic 
+EX&gt;, &lt;Year, 1995&gt;, &lt;Colour, White&gt;, &lt;Price, $6300&gt;, </font></p>
+<p><font size="4" face="Arial">&nbsp;&nbsp;&nbsp;&nbsp; &lt;Auto, Auto&gt;, 
+&lt;Air Cond., Air Cond.&gt;, &lt;AM/FM, AM/FM&gt;, &lt;CD,&nbsp; &gt;</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Solution: Adjust 
+Attribute-Value Pairs</font>&nbsp;<br></p>
+<p><font size="3" color="#ff3300" face="Arial">Legend</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">ACURA</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">ACURA</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">CD</font><font size="3" face="Arial"> </font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">CD </font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="4" face="Arial">&lt;Make, Honda&gt;, &lt;Model, Civic 
+EX&gt;, &lt;Year, 1995&gt;, &lt;Colour, White&gt;, &lt;Price, $6300&gt;, </font></p>
+<p><font size="4" face="Arial">&nbsp;&nbsp;&nbsp;&nbsp; &lt;Auto&gt;, 
+&lt;Air Cond&gt;, &lt;AM/FM&gt;</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Solution: Do 
+Extraction</font>&nbsp;<br></p>
+<p><font size="3" color="#ff3300" face="Arial">Legend</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">ACURA</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">ACURA</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">CD</font><font size="3" face="Arial"> </font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">CD </font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Solution: Infer 
+Mappings</font>&nbsp;<br></p>
+<p><font size="3" color="#ff3300" face="Arial">Legend</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">ACURA</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">ACURA</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">CD</font><font size="3" face="Arial"> </font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">CD </font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="5" face="Times New Roman">{Car, Year, Make, Model, Mileage, 
+Price, PhoneNr},&nbsp; {PhoneNr, Extension}, {Car, Feature}</font>&nbsp;<br>
+</p>
+<p><font size="5" face="Arial">Each row is a car.</font>&nbsp;<br>
+</p>
+<p><font size="5" face="Arial">π<sub>Model</sub>μ<sub>(Year, Colour, 
+Price, Auto, Air Cond, AM/FM, CD)*</sub>Table</font>&nbsp;<br></p>
+<p><font size="5" face="Arial">π<sub>Make</sub>μ<sub>(Model, Year, 
+Colour, Price, Auto, Air Cond, AM/FM, CD)*</sub>μ<sub>(Year, Colour, 
+Price, Auto, Air Cond, AM/FM, CD)*</sub>Table</font>&nbsp;<br></p>
+<p><font size="5" face="Arial">π<sub>Year</sub>Table</font>&nbsp;<br>
+</p>
+<p><font size="5" face="Arial">Note: Mappings produce sets for attributes.&nbsp; 
+Joining to form records</font></p>
+<p><font size="5" face="Arial">is trivial because we have OIDs for table 
+rows (e.g. for each Car).</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Solution: Do 
+Extraction</font>&nbsp;<br></p>
+<p><font size="3" color="#ff3300" face="Arial">Legend</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">ACURA</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">ACURA</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">CD</font><font size="3" face="Arial"> </font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">CD </font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="5" face="Times New Roman">{Car, Year, Make, Model, Mileage, 
+Price, PhoneNr},&nbsp; {PhoneNr, Extension}, {Car, Feature}</font>&nbsp;<br>
+</p>
+<p><font size="5" face="Arial">π<sub>Model</sub>μ<sub>(Year, Colour, 
+Price, Auto, Air Cond, AM/FM, CD)*</sub>Table</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Solution: Do 
+Extraction</font>&nbsp;<br></p>
+<p><font size="3" color="#ff3300" face="Arial">Legend</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">ACURA</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">ACURA</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">CD</font><font size="3" face="Arial"> </font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">CD </font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="5" face="Times New Roman">{Car, Year, Make, Model, Mileage, 
+Price, PhoneNr},&nbsp; {PhoneNr, Extension}, {Car, Feature}</font>&nbsp;<br>
+</p>
+<p><font size="5" face="Arial">π<sub>Price</sub>Table</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Solution: Do 
+Extraction</font>&nbsp;<br></p>
+<p><font size="3" color="#ff3300" face="Arial">Legend</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">ACURA</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">ACURA</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">CD</font><font size="3" face="Arial"> </font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">CD </font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">AM/FM</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Air Cond.</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="3" color="#ff3300" face="Arial">Auto</font>&nbsp;<br>
+</p>
+<p><font size="5" face="Times New Roman">{Car, Year, Make, Model, Mileage, 
+Price, PhoneNr},&nbsp; {PhoneNr, Extension}, {Car, Feature}</font>&nbsp;<br>
+</p>
+<p><font size="3" face="Arial">Yes,</font>&nbsp;<br></p>
+<p><font size="5" face="Times New Roman">ρ</font><font size="5" face="Arial"> <sub>
+Colour←Feature </sub></font><font size="5" face="Times New Roman">π</font><font size="2" face="Arial"> </font><font size="5" face="Arial"><sub>Colour</sub>Table 
+U </font><font size="5" face="Times New Roman">ρ</font><font size="5" face="Arial"> <sub>
+Auto</sub></font><font size="2" face="Arial">←</font><font size="5" face="Arial"><sub>Feature </sub></font><font size="4" face="Times New Roman">π</font><font size="4" face="Arial"> </font><font size="5" face="Arial"><sub>Auto </sub></font><font size="5" face="Times New Roman">β</font><font size="5" face="Arial"> <sup>Auto</sup>Table U </font><font size="5" face="Times New Roman">ρ</font><font size="2" face="Arial"> </font><font size="5" face="Arial"><sub>Air 
+Cond.</sub></font><font size="2" face="Times New Roman">←</font><font size="5" face="Arial"><sub>Feature </sub></font><font size="5" face="Times New Roman">π</font><font size="5" face="Arial"> <sub>Air Cond.</sub></font>&nbsp;<br></p>
+<p><font size="5" face="Times New Roman">β</font><font size="5" face="Arial"> <sup>
+Air Cond.</sup>Table U </font><font size="5" face="Times New Roman">ρ </font><font size="5" face="Arial"><sub>AM/FM</sub></font><font size="2" face="Times New Roman">←</font><font size="5" face="Arial"><sub>Feature </sub></font><font size="5" face="Times New Roman">π</font><font size="5" face="Arial"> <sub>AM/FM </sub></font><font size="5" face="Times New Roman">β</font><font size="5" face="Arial"> <sup>AM/FM</sup>Table U ρ <sub>CD</sub></font><font size="2" face="Times New Roman">←</font><font size="5" face="Arial"><sub>Feature</sub>π <sub>
+CD</sub>β <sup>CD</sup>Table</font>&nbsp;<br></p>
+<p><font size="3" face="Arial">Yes,</font>&nbsp;<br></p>
+<p><font size="3" face="Arial">Yes,</font>&nbsp;<br></p>
+<p><font size="3" face="Arial">Yes,</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Experiment</font>&nbsp;<br>
+</p>
+<ul type="disc">
+  <li><font size="6" face="Times New Roman">Tables from 60 sites</font></li>
+  <li><font size="6" face="Times New Roman">10 </font><font size="6" face="Tahoma">“training” 
+  tables</font></li>
+  <li><font size="6" face="Times New Roman">50 test tables</font></li>
+  <li><font size="6" face="Times New Roman">357 mappings (from 
+  all 60 sites)</font></li>
+  <ul type="disc">
+    <li><font size="6" face="Times New Roman">172 direct mappings 
+    (same attribute and meaning)</font></li>
+    <li><font size="6" face="Times New Roman">185 indirect mappings 
+    (29 attribute synonyms, 5 </font><font size="6" face="Tahoma">“Yes/No” 
+    columns, 68 unions over columns for Feature, 19 factored values, and 
+    89 columns of merged values that needed to be split)</font></li>
+</ul></ul>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Results</font>&nbsp;<br>
+</p>
+<ul type="disc">
+  <li><font size="6" face="Times New Roman">10 “training” 
+  tables</font></li>
+  <ul type="disc">
+    <li><font size="6" face="Times New Roman">100% of the 57 mappings 
+    (no false mappings)</font></li>
+    <li><font size="6" face="Times New Roman">94.6% of the values 
+    in linked pages (5.4% false declarations)</font></li>
+    </ul>
+  <li><font size="6" face="Times New Roman">50 test tables</font></li>
+  <ul type="disc">
+    <li><font size="6" face="Times New Roman">94.7% of the 300 
+    mappings (no false mappings)</font></li>
+    <li><font size="6" face="Times New Roman">On the bases of 
+    sampling 3,000 values in linked pages, we obtained 97% recall and 86% 
+    precision</font></li>
+    </ul>
+  <li><font size="6" face="Times New Roman">16 missed mappings</font></li>
+  <ul type="disc">
+    <li><font size="6" face="Times New Roman">4 partial (not all 
+    unions included)</font></li>
+    <li><font size="6" face="Times New Roman">6 non-U.S. car-ads 
+    (unrecognized makes and models)</font></li>
+    <li><font size="6" face="Times New Roman">2 U.S. unrecognized 
+    makes and models</font></li>
+    <li><font size="6" face="Times New Roman">3 prices (missing 
+    $ or found MSRP instead)</font></li>
+    <li><font size="6" face="Times New Roman">1 mileage (mileages 
+    less than 1,000)</font></li>
+</ul></ul>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Direct <b style="color: black; background-color: rgb(255, 255, 102);">Schema</b> 
+<b style="color: black; background-color: rgb(160, 255, 255);">Matching</b></font>&nbsp;<br></p>
+<p align="center"><font size="7" face="Times New Roman"><i>Li Xu</i></font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Attribute <b style="color: black; background-color: rgb(160, 255, 255);">Matching</b>&nbsp;<br>
+for Populated Schemas</font>&nbsp;<br></p>
+<ul type="disc">
+  <li><font size="7" face="Times New Roman">Central Idea: Exploit 
+  All Data &amp; Metadata</font></li>
+  <li><font size="7" face="Times New Roman"><b style="color: black; background-color: rgb(160, 255, 255);">Matching</b> Possibilities 
+  (Facets)</font></li>
+  <ul type="disc">
+    <li><font size="6" face="Times New Roman">Attribute Names</font></li>
+    <li><font size="6" face="Times New Roman">Data-Value Characteristics</font></li>
+    <li><font size="6" face="Times New Roman">Expected Data Values</font></li>
+    <li><font size="6" face="Times New Roman">Data-Dictionary 
+    Information</font></li>
+    <li><font size="6" face="Times New Roman">Structural Properties</font></li>
+</ul></ul>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Approach&nbsp;</font>&nbsp;<br>
+</p>
+<ul type="disc">
+  <li><font size="7" face="Times New Roman">Target <b style="color: black; background-color: rgb(255, 255, 102);">Schema</b> <i>
+  T</i></font></li>
+  <li><font size="7" face="Times New Roman">Source <b style="color: black; background-color: rgb(255, 255, 102);">Schema</b> <i>
+  S</i></font></li>
+  <li><font size="7" face="Times New Roman">Framework</font></li>
+  <ul type="disc">
+    <li><font size="6" face="Times New Roman">Individual Facet 
+    <b style="color: black; background-color: rgb(160, 255, 255);">Matching</b></font></li>
+    <li><font size="6" face="Times New Roman">Combining Facets</font></li>
+    <li><font size="6" face="Times New Roman">Best-First Match 
+    Iteration</font></li>
+</ul></ul>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Example</font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Tahoma">Source <b style="color: black; background-color: rgb(255, 255, 102);">Schema</b> S</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Tahoma">Car</font><font size="6" face="Tahoma"> </font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Tahoma">Year</font>&nbsp;<br>
+</p>
+<p><font size="3" face="Arial">has</font>&nbsp;<br></p>
+<p><font size="2" face="Times New Roman">0:1</font>&nbsp;<br></p>
+<p align="center"><font size="4" face="Tahoma">Make</font>&nbsp;<br>
+</p>
+<p><font size="3" face="Arial">has</font>&nbsp;<br></p>
+<p><font size="2" face="Times New Roman">0:1</font>&nbsp;<br></p>
+<p align="center"><font size="4" face="Tahoma">Model</font>&nbsp;<br>
+</p>
+<p><font size="3" face="Arial">has</font>&nbsp;<br></p>
+<p><font size="2" face="Times New Roman">0:1</font>&nbsp;<br></p>
+<p align="center"><font size="4" face="Tahoma">Cost</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Tahoma">Style</font>&nbsp;<br>
+</p>
+<p><font size="3" face="Arial">has</font>&nbsp;<br></p>
+<p><font size="3" face="Arial">has</font>&nbsp;<br></p>
+<p><font size="2" face="Times New Roman">0:1</font>&nbsp;<br></p>
+<p><font size="2" face="Times New Roman">0:*</font>&nbsp;<br></p>
+<p align="center"><font size="4" face="Tahoma">Year</font>&nbsp;<br>
+</p>
+<p><font size="3" face="Arial">has</font>&nbsp;<br></p>
+<p><font size="2" face="Times New Roman">0:1</font>&nbsp;<br></p>
+<p align="center"><font size="4" face="Tahoma">Feature</font>&nbsp;<br>
+</p>
+<p><font size="3" face="Arial">has</font>&nbsp;<br></p>
+<p><font size="2" face="Times New Roman">0:*</font>&nbsp;<br></p>
+<p align="center"><font size="4" face="Tahoma">Cost</font>&nbsp;<br>
+</p>
+<p><font size="3" face="Arial">has</font>&nbsp;<br></p>
+<p><font size="2" face="Times New Roman">0:1</font>&nbsp;<br></p>
+<p align="center"><font size="4" face="Tahoma">Car</font><font size="6" face="Tahoma"> </font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Tahoma">Mileage</font>&nbsp;<br>
+</p>
+<p><font size="3" face="Arial">has</font>&nbsp;<br></p>
+<p align="center"><font size="4" face="Tahoma">Phone</font>&nbsp;<br>
+</p>
+<p><font size="3" face="Arial">has</font>&nbsp;<br></p>
+<p><font size="2" face="Times New Roman">0:1</font>&nbsp;<br></p>
+<p><font size="2" face="Times New Roman">0:1</font>&nbsp;<br></p>
+<p align="center"><font size="4" face="Tahoma">Model</font>&nbsp;<br>
+</p>
+<p><font size="3" face="Arial">has</font>&nbsp;<br></p>
+<p><font size="2" face="Times New Roman">0:1</font>&nbsp;<br></p>
+<p align="center"><font size="5" face="Tahoma">Target <b style="color: black; background-color: rgb(255, 255, 102);">Schema</b> T</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Tahoma">Make</font>&nbsp;<br>
+</p>
+<p><font size="3" face="Arial">has</font>&nbsp;<br></p>
+<p><font size="2" face="Times New Roman">0:1</font>&nbsp;<br></p>
+<p align="center"><font size="3" face="Tahoma">Miles</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Tahoma">has</font>&nbsp;<br>
+</p>
+<p align="center"><font size="2" face="Tahoma">0:1</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#3333cc" face="Tahoma"><b>Year</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Tahoma"><b>Model</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#ccccff" face="Tahoma"><b>Make</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#3333cc" face="Tahoma"><b>Year</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#ccccff" face="Tahoma"><b>Make</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Tahoma"><b>Model</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#ff00ff" face="Tahoma"><b>Car</b></font><font size="6" face="Tahoma"> </font>&nbsp;<br></p>
+<p align="center"><font size="4" color="#ff00ff" face="Tahoma"><b>Car</b></font><font size="6" face="Tahoma"> </font>&nbsp;<br></p>
+<p align="center"><font size="4" color="#66ff33" face="Tahoma"><b>Mileage</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#66ff33" face="Tahoma"><b>Miles</b></font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Individual Facet 
+<b style="color: black; background-color: rgb(160, 255, 255);">Matching</b></font>&nbsp;<br></p>
+<ul type="disc">
+  <li><font size="7" face="Times New Roman">Attribute Names</font></li>
+  <li><font size="7" face="Times New Roman">Data-Value Characteristics</font></li>
+  <li><font size="7" face="Times New Roman">Expected Data Values</font></li>
+</ul>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Attribute Names&nbsp;</font>&nbsp;<br>
+</p>
+<ul type="disc">
+  <li><font size="6" face="Times New Roman">Target and Source 
+  Attributes </font></li>
+  <ul type="disc">
+    <li><font size="6" face="Times New Roman"><i>T</i> : <i>
+    A</i> </font></li>
+    <li><font size="6" face="Times New Roman"><i>S </i>
+    : <i>B</i></font></li>
+    </ul>
+  <li><font size="6" face="Times New Roman">WordNet</font></li>
+  <li><font size="6" face="Times New Roman">C4.5 Decision Tree: 
+  feature selection, trained on schemas in DB books</font></li>
+  <ul type="disc">
+    <li><font size="6" face="Times New Roman">f0: same word</font></li>
+    <li><font size="6" face="Times New Roman">f1: synonym</font></li>
+    <li><font size="6" face="Times New Roman">f2: sum of distances 
+    to a common hypernym root</font></li>
+    <li><font size="6" face="Times New Roman">f3: number of different 
+    common hypernym roots</font></li>
+    <li><font size="6" face="Times New Roman">f4: sum of the number 
+    of senses of <i>A</i> and <i>B</i></font></li>
+</ul></ul>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">WordNet Rule&nbsp;</font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Tahoma"><b>The number of different 
+common hypernym roots of <i>A </i>and 
+<i>B</i></b></font>&nbsp;<br></p>
+<p align="center"><font size="3" face="Tahoma"><b>The sum of distances 
+of <i>A</i> and <i>B</i> to a common hypernym</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="3" face="Tahoma"><b>The sum of the number 
+of senses of <i>A</i> and <i>B</i></b></font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Confidence Measures</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Data-Value Characteristics</font>&nbsp;<br>
+</p>
+<ul type="disc">
+  <li><font size="7" face="Times New Roman">C4.5 Decision Tree </font></li>
+  <li><font size="7" face="Times New Roman">Features</font></li>
+  <ul type="disc">
+    <li><font size="6" face="Times New Roman">Numeric data</font></li>
+</ul></ul>
+<ul><p><font size="6" face="Times New Roman">(Mean, variation, standard 
+deviation, …) </font></p></ul>
+<ul><ul type="disc">
+    <li><font size="6" face="Times New Roman">Alphanumeric 
+    data</font></li>
+</ul></ul>
+<ul><p><font size="6" face="Times New Roman">(String length, numeric 
+ratio, space ratio)</font></p></ul>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Confidence Measures</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Expected Data 
+Values</font>&nbsp;<br></p>
+<ul type="disc">
+  <li><font size="6" face="Times New Roman">Target <b style="color: black; background-color: rgb(255, 255, 102);">Schema</b> <i>
+  T</i> and Source <b style="color: black; background-color: rgb(255, 255, 102);">Schema</b> <i>S</i></font></li>
+  <ul type="disc">
+    <li><font size="6" face="Times New Roman">Regular expression 
+    recognizer for attribute <i>A </i>in<i> T</i></font></li>
+    <li><font size="6" face="Times New Roman">Data instances for 
+    attribute <i>B </i>in<i> S</i></font></li>
+    </ul>
+  <li><font size="6" face="Times New Roman">Hit Ratio = N'/N 
+  for (<i>A</i>, <i>B</i>) match</font></li>
+  <ul type="disc">
+    <li><font size="6" face="Times New Roman">N' : number of <i>
+    B</i> data instances recognized by the regular expressions of <i>A</i></font></li>
+    <li><font size="6" face="Times New Roman">N: number of <i>
+    B </i>data instances</font></li>
+</ul></ul>
+<ul><p><font size="6" face="Times New Roman"> </font>&nbsp;<br></p></ul>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Confidence Measures</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Combined Measures</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#3333cc" face="Tahoma"><b>Threshold: 
+0.5</b></font>&nbsp;<br></p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">1</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">1</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">1</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">1</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">1</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" color="#ccccff" face="Tahoma">0</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Final Confidence 
+Measures </font>&nbsp;<br></p>
+<p align="center"><font size="6" face="Times New Roman">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" face="Times New Roman">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="6" face="Times New Roman">0</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Experimental 
+Results</font>&nbsp;<br></p>
+<ul type="disc">
+  <li><font size="6" face="Times New Roman">This <b style="color: black; background-color: rgb(255, 255, 102);">schema</b>, plus 
+  6 other schemas</font></li>
+  <ul type="disc">
+    <li><font size="6" face="Times New Roman">32 matched attributes</font></li>
+    <li><font size="6" face="Times New Roman">376 unmatched attributes</font></li>
+    </ul>
+  <li><font size="6" face="Times New Roman">Measures</font></li>
+  <ul type="disc">
+    <li><font size="6" face="Times New Roman">Recall: 100%</font></li>
+    <li><font size="6" face="Times New Roman">Precision: 94%</font></li>
+    <li><font size="6" face="Times New Roman">F Measure: 97%</font></li>
+    </ul>
+  <li><font size="6" face="Times New Roman">False Positives</font></li>
+  <ul type="disc">
+    <li><font size="6" face="Times New Roman">“Feature” ---”Color”</font></li>
+    <li><font size="6" face="Times New Roman">“Feature” ---”Body 
+    Type”</font></li>
+</ul></ul>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Indirect <b style="color: black; background-color: rgb(255, 255, 102);">Schema</b> 
+<b style="color: black; background-color: rgb(160, 255, 255);">Matching</b></font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman"><b style="color: black; background-color: rgb(255, 255, 102);">Schema</b> <b style="color: black; background-color: rgb(160, 255, 255);">Matching</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Tahoma">Source</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#ff00ff" face="Tahoma"><b>Car</b></font><font size="6" face="Tahoma"> </font>&nbsp;<br></p>
+<p align="center"><font size="4" color="#006600" face="Tahoma">Year</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Tahoma">Cost</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#ff0000" face="Tahoma"><b>Style</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#006600" face="Tahoma">Year</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#ff0000" face="Tahoma"><b>Feature</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Tahoma">Cost</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Tahoma">Phone</font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Tahoma">Target</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#ff00ff" face="Tahoma"><b>Car</b></font><font size="6" face="Tahoma"> </font>&nbsp;<br></p>
+<p align="center"><font size="3" color="#b2541a" face="Tahoma"><b>Miles</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#b2541a" face="Tahoma"><b>Mileage</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#000000" face="Tahoma"><b>Model</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#000000" face="Tahoma"><b>Make</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#000000" face="Tahoma"><b>Make</b></font></p>
+<p align="center"><font size="4" color="#000000" face="Tahoma"><b>&amp;</b></font></p>
+<p align="center"><font size="4" color="#000000" face="Tahoma"><b>Model</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#ff0000" face="Tahoma"><b>Color</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#ff0000" face="Tahoma"><b>Body 
+Type</b></font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Mapping Generation</font>&nbsp;<br>
+</p>
+<ul type="disc">
+  <li><font size="6" face="Times New Roman">Direct&nbsp; Matches 
+  as described earlier:</font></li>
+  <ul type="disc">
+    <li><font size="6" face="Times New Roman">Attribute Names 
+    based on WordNet</font></li>
+    <li><font size="6" face="Times New Roman">Value Characteristics 
+    based on value lengths, averages, …</font></li>
+    <li><font size="6" face="Times New Roman">Expected Values 
+    based on regular-expression recognizers</font></li>
+    </ul>
+  <li><font size="6" face="Times New Roman">Indirect Matches:</font></li>
+  <ul type="disc">
+    <li><font size="6" face="Times New Roman">Direct matches</font></li>
+    <li><font size="6" face="Times New Roman">Structure Evaluation</font></li>
+    <ul type="disc">
+      <li><font size="6" face="Times New Roman">Union</font></li>
+      <li><font size="6" face="Times New Roman">Selection</font></li>
+      <li><font size="6" face="Times New Roman">Decomposition</font></li>
+      <li><font size="6" face="Times New Roman">Composition</font></li>
+</ul></ul></ul>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Union and Selection</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#ff00ff" face="Tahoma"><b>Car</b></font><font size="6" face="Tahoma"> </font>&nbsp;<br></p>
+<p align="center"><font size="5" face="Tahoma">Source</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#006600" face="Tahoma">Year</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Tahoma">Cost</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#ff0000" face="Tahoma"><b>Style</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#006600" face="Tahoma">Year</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#ff0000" face="Tahoma"><b>Feature</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Tahoma">Cost</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Tahoma">Phone</font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Tahoma">Target</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#ff00ff" face="Tahoma"><b>Car</b></font><font size="6" face="Tahoma"> </font>&nbsp;<br></p>
+<p align="center"><font size="3" color="#b2541a" face="Tahoma"><b>Miles</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#b2541a" face="Tahoma"><b>Mileage</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#000000" face="Tahoma"><b>Model</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#000000" face="Tahoma"><b>Make</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#000000" face="Tahoma"><b>Make</b></font></p>
+<p align="center"><font size="4" color="#000000" face="Tahoma"><b>&amp;</b></font></p>
+<p align="center"><font size="4" color="#000000" face="Tahoma"><b>Model</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#ff0000" face="Tahoma"><b>Color</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#ff0000" face="Tahoma"><b>Body 
+Type</b></font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Decomposition 
+and Composition</font>&nbsp;<br></p>
+<p align="center"><font size="4" color="#ff00ff" face="Tahoma"><b>Car</b></font><font size="6" face="Tahoma"> </font>&nbsp;<br></p>
+<p align="center"><font size="5" face="Tahoma">Source</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#006600" face="Tahoma">Year</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Tahoma">Cost</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#ff0000" face="Tahoma"><b>Style</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#006600" face="Tahoma">Year</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#ff0000" face="Tahoma"><b>Feature</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Tahoma">Cost</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Tahoma">Phone</font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Tahoma">Target</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#ff00ff" face="Tahoma"><b>Car</b></font><font size="6" face="Tahoma"> </font>&nbsp;<br></p>
+<p align="center"><font size="3" color="#b2541a" face="Tahoma"><b>Miles</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#b2541a" face="Tahoma"><b>Mileage</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#000000" face="Tahoma"><b>Model</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#000000" face="Tahoma"><b>Make</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#000000" face="Tahoma"><b>Make</b></font></p>
+<p align="center"><font size="4" color="#000000" face="Tahoma"><b>&amp;</b></font></p>
+<p align="center"><font size="4" color="#000000" face="Tahoma"><b>Model</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#ff0000" face="Tahoma"><b>Color</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" color="#ff0000" face="Tahoma"><b>Body 
+Type</b></font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Structure</font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>PO</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>POShipTo</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>POBillTo</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>POLines</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>City</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Street</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>City</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Street</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Item</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Count</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Line</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Qty</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>UoM</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>PurchaseOrder</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>DeliverTo</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>InvoiceTo</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Items</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Item</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>ItemCount</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>ItemNumber</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Quantity</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>UnitOfMeasure</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>City</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Street</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Address</b></font>&nbsp;<br>
+</p>
+<p><font size="6" face="Times New Roman"><b>Target</b></font>&nbsp;<br>
+</p>
+<p><font size="6" face="Times New Roman"><b>Source</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Arial">Example Taken </font><font size="5" face="Times New Roman">From</font><font size="5" face="Arial"> 
+[MBR, VLDB</font><font size="5" face="Times New Roman">’01]</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Structure&nbsp;<br>
+(Nonlexical Matches)</font>&nbsp;<br></p>
+<p align="center"><font size="4" face="Times New Roman"><b>PO</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>POShipTo</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>POBillTo</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>POLines</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>City</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Street</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>City</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Street</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Item</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Count</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Line</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Qty</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>UoM</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>PurchaseOrder</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>DeliverTo</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>InvoiceTo</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Items</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Item</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Count</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>ItemNumber</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Quantity</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>UnitOfMeasure</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>City</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Street</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Address</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>DeliverTo</b></font>&nbsp;<br>
+</p>
+<p><font size="6" face="Times New Roman"><b>Target</b></font>&nbsp;<br>
+</p>
+<p><font size="6" face="Times New Roman"><b>Source</b></font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Structure&nbsp;<br>
+(Join over FD Relationship Sets, …)</font>&nbsp;<br></p>
+<p align="center"><font size="4" face="Times New Roman"><b>PO</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>POBillTo</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>POLines</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>City</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Street</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>City</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Street</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Item</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Count</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Line</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Qty</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>UoM</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>PurchaseOrder</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>InvoiceTo</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Items</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Item</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Count</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>ItemNumber</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Quantity</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>UnitOfMeasure</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>City</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Street</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>City</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Street</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>POShipTo</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>DeliverTo</b></font>&nbsp;<br>
+</p>
+<p><font size="6" face="Times New Roman"><b>Target</b></font>&nbsp;<br>
+</p>
+<p><font size="6" face="Times New Roman"><b>Source</b></font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Structure&nbsp;<br>
+(Lexical Matches)</font>&nbsp;<br></p>
+<p align="center"><font size="4" face="Times New Roman"><b>PO</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>POBillTo</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>POLines</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>City</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Street</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>City</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Street</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Item</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Count</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Line</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Qty</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>UoM</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>PurchaseOrder</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>InvoiceTo</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Items</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Item</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Count</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>ItemNumber</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Quantity</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>City</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Street</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>City</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Street</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>City</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>City</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Street</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Street</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>City</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>City</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Street</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Street</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Count</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Count</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Line</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Qty</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>Quantity</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>UnitOfMeasure</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>POShipTo</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="4" face="Times New Roman"><b>DeliverTo</b></font>&nbsp;<br>
+</p>
+<p><font size="6" face="Times New Roman"><b>Target</b></font>&nbsp;<br>
+</p>
+<p><font size="6" face="Times New Roman"><b>Source</b></font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Experimental 
+Results</font>&nbsp;<br></p>
+<p align="center"><font size="5" face="Times New Roman">20</font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman">2</font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman"><b>False</b></font></p>
+<p align="center"><font size="5" face="Times New Roman"><b>Positive</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman">235</font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman">140</font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman">119</font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman"><b>Correct</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman">0</font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman">100</font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman">100</font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman">100</font>&nbsp;<br>
+</p>
+<p><font size="5" face="Times New Roman">Faculty Member (5)</font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman">9</font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman">96</font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman">93</font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman">98</font>&nbsp;<br>
+</p>
+<p><font size="5" face="Times New Roman">Course Schedule (5)</font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman">10</font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman">94</font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman">96</font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman">92</font>&nbsp;<br>
+</p>
+<p><font size="5" face="Times New Roman">Real Estate (5)</font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman"><b>False</b></font></p>
+<p align="center"><font size="5" face="Times New Roman"><b>Negative</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman"><b>F</b></font></p>
+<p align="center"><font size="5" face="Times New Roman"><b>(%)</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman"><b>Recall</b></font></p>
+<p align="center"><font size="5" face="Times New Roman"><b>(%)</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman"><b>Precision</b></font></p>
+<p align="center"><font size="5" face="Times New Roman"><b>(%)</b></font>&nbsp;<br>
+</p>
+<p align="center"><font size="5" face="Times New Roman"><b>Applications</b></font></p>
+<p align="center"><font size="5" face="Times New Roman"><b>(Number of 
+Schemes)</b></font>&nbsp;<br></p>
+<p><font size="5" color="#3366ff" face="Times New Roman">Data borrowed 
+from Univ. of Washington [DDH, SIGMOD01]</font>&nbsp;<br></p>
+<p><font size="6" color="#ff0000" face="Times New Roman">Indirect Matches: 
+94% (precision, recall, F-measure)</font>&nbsp;<br></p>
+<p><font size="5" color="#3366ff" face="Times New Roman">Rough Comparison 
+with U of W Results (Direct Matches only)</font></p>
+<p><font size="5" color="#3366ff" face="Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp; 
+* Course Schedule – Accuracy: ~71%</font></p>
+<p><font size="5" color="#3366ff" face="Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp; 
+* Faculty Members – Accuracy, ~92%</font></p>
+<p><font size="5" color="#3366ff" face="Times New Roman">&nbsp;&nbsp;&nbsp;&nbsp; 
+* Real Estate (2 tests) – Accuracy: ~75%</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Conclusions 
+and Future Work</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Conclusions</font>&nbsp;<br>
+</p>
+<ul type="disc">
+  <li><font size="6" face="Times New Roman">Table Mappings</font></li>
+  <ul type="disc">
+    <li><font size="6" face="Times New Roman">Tables: 94.7% (Recall);&nbsp; 
+    100% (Precision)</font></li>
+    <li><font size="6" face="Times New Roman">Linked Text: ~97% 
+    (Recall); ~86% (Precision)</font></li>
+    </ul>
+  <li><font size="6" face="Times New Roman">Direct Attribute 
+  <b style="color: black; background-color: rgb(160, 255, 255);">Matching</b></font></li>
+  <ul type="disc">
+    <li><font size="6" face="Times New Roman">Matched 32 of 32: 
+    100% Recall</font></li>
+    <li><font size="6" face="Times New Roman">2 False Positives: 
+    94% Precision</font></li>
+    </ul>
+  <li><font size="6" face="Times New Roman">Direct and Indirect 
+  Attribute <b style="color: black; background-color: rgb(160, 255, 255);">Matching</b></font></li>
+  <ul type="disc">
+    <li><font size="6" face="Times New Roman">Matched 494 of 513: 
+    96% Recall</font></li>
+    <li><font size="6" face="Times New Roman">22 False Positives: 
+    96% Precision</font></li>
+</ul></ul>
+&nbsp;<br>&nbsp;<br>
+<p><font size="5" face="Arial">www.deg.byu.edu</font></p>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Current &amp; 
+Future Work:&nbsp;<br>
+Improve and Extend Indirect <b style="color: black; background-color: rgb(160, 255, 255);">Matching</b></font>&nbsp;<br></p>
+<ul type="disc">
+  <li><font size="6" face="Times New Roman">Improve Object-Set 
+  <b style="color: black; background-color: rgb(160, 255, 255);">Matching</b> (e.g. Lex/non-Lex) </font></li>
+  <li><font size="6" face="Times New Roman">Add Relationship-Set 
+  <b style="color: black; background-color: rgb(160, 255, 255);">Matching</b></font></li>
+  <li><font size="6" face="Times New Roman">Computations</font></li>
+</ul>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Current &amp; 
+Future Work:&nbsp;<br>
+Tables Behind Forms</font>&nbsp;<br></p>
+<ul type="disc">
+  <li><font size="7" face="Times New Roman">Crawling the Hidden 
+  Web</font></li>
+  <li><font size="7" face="Times New Roman">Filling in Forms 
+  from Global Queries</font></li>
+</ul>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Current &amp; 
+Future Work:&nbsp;<br>
+Developing Extraction Ontologies</font>&nbsp;<br></p>
+<ul type="disc">
+  <li><font size="7" face="Times New Roman">Creation from Knowledge 
+  Sources and Sample Application Pages</font></li>
+  <ul type="disc">
+    <li><font size="6" face="Arial">μ</font><font size="6" face="Times New Roman">K 
+    Ontology + Data Frames, Lexicons, …</font></li>
+    <li><font size="6" face="Times New Roman">RDF Ontologies</font></li>
+    </ul>
+  <li><font size="7" face="Times New Roman">User Creation by 
+  Example</font></li>
+</ul>
+
+
+&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+<p><font size="2" face="Arial">BYU 2003</font>&nbsp;<br></p>
+<p><font size="2" face="Arial">BYU Data Extraction Group</font>&nbsp;<br>
+</p>
+<p align="center"><font size="7" face="Times New Roman">Current &amp; 
+Future Work:&nbsp;<br>
+and Much More …</font>&nbsp;<br></p>
+<ul type="disc">
+  <li><font size="6" face="Times New Roman">Table Understanding</font></li>
+  <li><font size="6" face="Times New Roman">Microfilm Census 
+  Records</font></li>
+  <li><font size="6" face="Times New Roman">Generate Ontologies 
+  by Reading Tables</font></li>
+  <li><font size="6" face="Times New Roman">…</font></li>
+</ul>
+&nbsp;<br>
+<p><font size="5" face="Arial">www.deg.byu.edu</font></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div></body></html>
